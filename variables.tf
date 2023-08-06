@@ -17,12 +17,12 @@ variable "eks_account_id" {
   description = "EKS Account ID for Cluster encryption config"
   default   = 883545701064
 }
-variable "eks_vpc_id" {
-  description = "VPC_ID for Cluster"
-}
-variable "eks_subnet_ids" {
-  description = "Any Subnnet ids In VPC_ID" 
-}
+# variable "eks_vpc_id" {
+#   description = "VPC_ID for Cluster"
+# }
+# variable "eks_subnet_ids" {
+#   description = "Any Subnnet ids In VPC_ID" 
+# }
 variable "eks_instance_policy" {
   description = "Policy for SelfManaged NodeGroup" 
 }

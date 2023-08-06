@@ -3,7 +3,7 @@
 resource "aws_security_group" "efs-sg" {
   name = "eks-${var.efs_tag_name}-securitygroup"
   tags = {Name = "eks-${var.efs_tag_name}-securitygroup"}
-  vpc_id = var.eks_vpc_id
+  vpc_id = aws_vpc.eks_vpc.id
   
 }
 

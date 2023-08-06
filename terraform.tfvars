@@ -3,16 +3,16 @@ eks_k8s_version = "1.24"
 eks_region_code = "ap-northeast-2"
 eks_account_id = "883545701064"
 #eks_vpc_id = "${aws_vpc.team01.id}"
-eks_vpc_id = "vpc-0a987f929c0e4041d"
-#eks_vpc_cidr_range = "10.1.0.0/16"
-eks_vpc_cidr_range = "10.10.0.0/16"
+#eks_vpc_id = "vpc-0a987f929c0e4041d"
+eks_vpc_cidr_range = "10.1.0.0/16"
+#eks_vpc_cidr_range = "10.10.0.0/16"
 #eks_subnet_ids = ["${aws_subnet.team01[count.index]}"]
-eks_subnet_ids = [ "subnet-07d74ac8872f0f876", "subnet-0fb51b3d2ece1db05", "subnet-0cdf269ab313752ee", "subnet-051e4cb0f5a61f3a6"]
+#eks_subnet_ids = [ "subnet-07d74ac8872f0f876", "subnet-0fb51b3d2ece1db05", "subnet-0cdf269ab313752ee", "subnet-051e4cb0f5a61f3a6"]
 eks_instance_policy="false"
 
 #MASTER_NODEGROUP 
 eks_master_nodegroup_name="aiip-qa-master"
-eks_master_disk_size = 300 
+eks_master_disk_size = 100 
 eks_master_max_size="2" 
 eks_master_min_size="1"
 eks_master_desired_size="1"
@@ -22,7 +22,7 @@ eks_master_sg_group = false
 
 #WORKER_NODEGROUP 
 eks_worker_nodegroup_name="aiip-qa-worker"
-eks_worker_disk_size = 300 
+eks_worker_disk_size = 100 
 eks_worker_max_size="3"
 eks_worker_min_size="2"
 eks_worker_desired_size="2"
@@ -74,7 +74,7 @@ eks_rds_engine     = "mariadb"
 eks_rds_engine_version = "10.4.25"
 eks_rds_engine_instance_class = "db.t4g.xlarge"
 eks_rds_allocate_storage = 50
-eks_rds_max_allocate_sotrage = 300
+eks_rds_max_allocate_sotrage = 100
 eks_rds_db_name = "accu"
 eks_rds_user_name = "root"
 eks_rds_port = 3306

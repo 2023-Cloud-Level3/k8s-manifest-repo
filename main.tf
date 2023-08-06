@@ -4,6 +4,37 @@ module "iam" {
 }
 
 
+#VPC 생성 
+resource "aws_vpc" "eks_vpc" { 
+cidr_block = "10.1.0.0/16" 
+enable_dns_hostnames = true
+enable_dns_support = true
+instance_tenancy = "default"
+tags = {
+Name = "team01-vpc"
+} 
+}
+output "vpc_id" {
+  description = "VPC의 ID"
+  value       = aws_vpc.eks_vpc.id
+}
+
+#Subnet 생성 
+resource "aws_subnet" "eks_subnet" {
+  count             = 6
+  vpc_id            = aws_vpc.eks_vpc.id
+  cidr_block        = "10.1.${count.index + 1}.0/24"  # 서브넷의 CIDR 블록을 "10.1.1.0/24"부터 "10.1.6.0/24"까지 순차적으로 설정합니다.
+  availability_zone = element(["ap-northeast-2a", "ap-northeast-2b"], count.index % 2)  # 서브넷을 가용 영역 "ap-northeast-2a"와 "ap-northeast-2b"로 번갈아가면서 생성합니다.
+
+  tags = {
+    Name = "aws_subnet.eks_subnet[*].id"
+  }
+}
+
+output "subnet_ids" {
+  description = "생성된 서브넷들의 ID 리스트"
+  value       = aws_subnet.eks_subnet[*].id
+}
 
 
 module "eks" {
@@ -74,10 +105,11 @@ module "eks" {
     resources        = ["secrets"]
   }] : []
   
-  vpc_id = var.eks_vpc_id
+  vpc_id = aws_vpc.eks_vpc.id
   #vpc_id     = "${aws_vpc.team01.id}"
-  subnet_ids = var.eks_subnet_ids
+  #subnet_ids = var.eks_subnet_ids
   #subnet_ids = "${aws_subnet.team01[count.index]}"
+  subnet_ids = aws_subnet.eks_subnet[*].id
 
 
  eks_managed_node_group_defaults = {
